@@ -17,8 +17,34 @@ class Server {
   }
 
   routes() {
-    this.app.get('/', (req, res) => {
-      res.send('Hello World');
+    this.app.get('/api', (req, res) => {
+      res.json({
+        msg: 'getapi',
+      });
+    });
+
+    this.app.put('/api', (req, res) => {
+      res.json({
+        msg: 'putapi',
+      });
+    });
+
+    this.app.post('/api', (req, res) => {
+      res.status(201).json({
+        msg: 'postapi',
+      });
+    });
+
+    this.app.delete('/api', (req, res) => {
+      res.json({
+        msg: 'deleteapi',
+      });
+    } );
+    
+    this.app.patch('/api', (req, res) => {
+      res.json({
+        msg: 'patchapi',
+      });
     });
   }
 
