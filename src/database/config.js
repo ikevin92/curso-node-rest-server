@@ -8,7 +8,7 @@ const dbConnection = async () => {
       // useCreateIndex: true,
       // useFindAndModify: false,
       retryWrites: true,
-      w: 'majority',
+      // w: 'majority',
     });
     console.log('Base de datos online');
   } catch (error) {
