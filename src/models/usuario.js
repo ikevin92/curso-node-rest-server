@@ -21,7 +21,10 @@ const UsuarioSchema = Schema(
     rol: {
       type: String,
       required: [true, 'el rol es obligatorio'],
-      enum: ['ADMIN_ROLE', 'USER_ROLE'],
+      enum: {
+        values: ['ADMIN_ROLE', 'USER_ROLE'],
+        message: '{VALUE} no es valida',
+      },
     },
     estado: {
       type: Boolean,
@@ -37,5 +40,11 @@ const UsuarioSchema = Schema(
     versionKey: false,
   },
 );
+
+// funcion para omitir campos como la contraseña en la respuesta
+UsuarioSchema.methods.toJSON = function () {
+  const { __v, password, ...usuario } = this.toObject();
+  return usuario;
+};
 
 module.exports = model('Usuario', UsuarioSchema);
