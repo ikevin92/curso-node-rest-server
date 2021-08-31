@@ -43,8 +43,11 @@ const UsuarioSchema = Schema(
 
 // funcion para omitir campos como la contraseña en la respuesta
 UsuarioSchema.methods.toJSON = function () {
-  const { __v, password, ...usuario } = this.toObject();
-  return usuario;
+  const { __v, password, _id, ...usuario } = this.toObject();
+  return {
+    uid: _id,
+    ...usuario,
+  };
 };
 
 module.exports = model('Usuario', UsuarioSchema);
