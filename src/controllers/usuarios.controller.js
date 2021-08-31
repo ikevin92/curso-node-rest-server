@@ -45,7 +45,7 @@ const usuariosPut = async (req = request, res = response) => {
   const { id } = req.params;
   // extraemos lo que no vamos actualizar
   const { password, google, _id, correo, ...resto } = req.body;
-  
+
   // validando match de la contraseña en la bd
   if (password) {
     //encriptar contraseña
@@ -53,7 +53,7 @@ const usuariosPut = async (req = request, res = response) => {
     usuario.password = bcryptjs.hashSync(password, salt);
   }
 
-  //
+  // actualizar usuario en la bd
   const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
   res.json(usuario);
@@ -66,7 +66,7 @@ const usuariosDelete = async (req = request, res = response) => {
   // const usuario = await Usuario.findByIdAndDelete(id);
 
   // cambiar estado de usuario
-  const usuario = await Usuario.findOneAndUpdate(id, { estado: false });
+  const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
   res.json(usuario);
 };
