@@ -1,5 +1,4 @@
-const Role = require('../models/role');
-const Usuario = require('../models/usuario');
+const { Usuario, Categoria, Role } = require('../models');
 
 const esRoleValido = async (rol = '') => {
   console.log(rol);
@@ -27,8 +26,27 @@ const existeUsuarioPorId = async (id) => {
   }
 };
 
+// Validadores de categorias
+const existeCategoriaPorId = async (id) => {
+  //verificar si la categoria existe
+  const existeCategoria = await Categoria.findById(id);
+  if (!existeCategoria) {
+    throw new Error(`El id ${id} no existe en la BD`);
+  }
+};
+
+const existeCategoriaPorNombre = async (nombre) => {
+  //verificar si la categoria existe
+  const existeCategoria = await Categoria.findOne({ nombre });
+  if (existeCategoria) {
+    throw new Error(`El nombre ${nombre} ya se encuentra en la BD`);
+  }
+};
+
 module.exports = {
   esRoleValido,
   emailExiste,
   existeUsuarioPorId,
+  existeCategoriaPorId,
+  existeCategoriaPorNombre,
 };
