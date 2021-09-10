@@ -12,7 +12,7 @@ const login = async (req = request, res = response) => {
   try {
     // verificar si el correo existe
     const usuario = await Usuario.findOne({ correo });
-    console.log(usuario);
+    console.log({ usuario });
     if (!usuario) {
       return res.status(400).json({
         msg: 'Usuario/Password no son validos - correo',
