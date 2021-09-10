@@ -55,7 +55,7 @@ const crearCategoria = async (req = request, res = response) => {
 
   const categoria = new Categoria(data);
   // guardar en db
-  categoria.save();
+  await categoria.save();
 
   return res.status(201).json(categoria);
 };
