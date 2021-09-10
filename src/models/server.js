@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const helmet = require('helmet');
 const { dbConnection } = require('../database/config');
 
 class Server {
@@ -9,8 +10,13 @@ class Server {
     this.port = process.env.PORT;
 
     // paths
-    this.usuariosPath = '/api/usuarios';
-    this.authPath = '/api/auth';
+    this.paths = {
+      auth: '/api/auth',
+      buscar: '/api/buscar',
+      categorias: '/api/categorias',
+      productos: '/api/productos',
+      usuarios: '/api/usuarios',
+    };
 
     //conectar a base de datos
     this.conectarDB();
@@ -29,6 +35,8 @@ class Server {
   middlewares() {
     // CORS
     this.app.use(cors());
+    // Helmet
+    this.app.use(helmet());
     // Morgan
     this.app.use(morgan('dev'));
     // lectura y parseo del body
@@ -38,8 +46,11 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.usuariosPath, require('../routes/usuarios.routes'));
-    this.app.use(this.authPath, require('../routes/auth.routes'));
+    this.app.use(this.paths.auth, require('../routes/auth.routes'));
+    this.app.use(this.paths.buscar, require('../routes/buscar.routes'));
+    this.app.use(this.paths.categorias, require('../routes/categorias.routes'));
+    this.app.use(this.paths.productos, require('../routes/productos.routes'));
+    this.app.use(this.paths.usuarios, require('../routes/usuarios.routes'));
   }
 
   listen() {
