@@ -70,4 +70,5 @@ router.delete(
   ],
   borrarCategoria,
 );
+
 module.exports = router;
